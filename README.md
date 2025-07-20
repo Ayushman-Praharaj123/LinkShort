@@ -17,12 +17,11 @@ This is a minimal, full-stack URL Shortener app built using the MERN stack. User
  Screenshots
 
 UI Preview of the Application
+<img width="1345" height="629" alt="Screenshot 2025-07-19 221137" src="https://github.com/user-attachments/assets/38964941-0e61-49c8-9cff-2d57c7a4bd44" />
+<img width="1357" height="622" alt="Screenshot 2025-07-19 221013" src="https://github.com/user-attachments/assets/14db60ce-3c82-4a93-acd1-707b0916d02e" />
+<img width="1344" height="627" alt="Screenshot 2025-07-19 221149" src="https://github.com/user-attachments/assets/4fbe815b-63ff-4400-80eb-2f141a8bb7ae" />
 
-- [Home Page](<img width="1345" height="629" alt="Screenshot 2025-07-19 221137" src="https://github.com/user-attachments/assets/38964941-0e61-49c8-9cff-2d57c7a4bd44" />)
-- [Login Page](<img width="1357" height="622" alt="Screenshot 2025-07-19 221013" src="https://github.com/user-attachments/assets/14db60ce-3c82-4a93-acd1-707b0916d02e" />)
-- [Dashboard](<img width="1344" height="627" alt="Screenshot 2025-07-19 221149" src="https://github.com/user-attachments/assets/4fbe815b-63ff-4400-80eb-2f141a8bb7ae" />)
-- 
-# Tech Stack
+ Tech Stack
 
  Frontend
 
