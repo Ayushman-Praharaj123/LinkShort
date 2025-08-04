@@ -12,8 +12,8 @@ import cookieParser from "cookie-parser";
 dotenv.config("./.env");
 const app = express();
 app.use(cors({
-    origin: "http://localhost:5173", // Your frontend URL (correct port) at the time of hosting you shoud change this url to your frontend url
-    credentials: true 
+    origin: "https://link-short-yoururlshortner.vercel.app/", // Your frontend URL (correct port) at the time of hosting you should change this url to your frontend url
+    credentials: true ,
 }));
 app.use(json());
 app.use(express.urlencoded({ extended: true }));

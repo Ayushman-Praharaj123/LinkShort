@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:3000",// Change this to your backend URL while hosting 
+    baseURL: "https://link-short-9mvs.vercel.app/",// Change this to your backend URL while hosting 
     timeout: 10000, // 10s
     withCredentials: true // Include cookies in requests
 })
