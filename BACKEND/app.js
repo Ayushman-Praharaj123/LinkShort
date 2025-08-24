@@ -11,16 +11,32 @@ import { attachUser } from "./SRC/utils/attachUser.js";
 import cookieParser from "cookie-parser";
 dotenv.config("./.env");
 const app = express();
+// CORS: allow only known frontends
+const allowedOrigins = [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    process.env.FRONTEND_URL
+].filter(Boolean);
+
 app.use(cors({
-    origin: "https://link-short-yoururlshortner.vercel.app/", // Your frontend URL (correct port) at the time of hosting you should change this url to your frontend url
-    credentials: true ,
+    origin: function (origin, callback) {
+        // Allow non-browser clients (Postman) and same-origin requests with no Origin header
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) return callback(null, true);
+        return callback(new Error(`Not allowed by CORS: ${origin}`));
+    },
+    credentials: true,
+    methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 app.use(json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(attachUser);
-app.use("/api/create",short_url);
-app.use("/api/auth",auth_routes);
+app.use("/api/create", short_url);
+app.use("/api", short_url); // For /api/urls endpoints
+app.use("/api/auth", auth_routes);
 app.get("/:id", redirectFromShortUrl);
 app.use(errorHandler);
 app.listen(3000, () => {

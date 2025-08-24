@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { createShortUrl as createShortUrlAPI } from '../../apis/shortUrl.api.js';
+import { createShortUrl as createShortUrlAPI, getUserUrls as getUserUrlsAPI, deleteUrl as deleteUrlAPI } from '../../apis/shortUrl.api.js';
 
 // Async thunks for URL operations
 export const createShortUrl = createAsyncThunk(
@@ -18,12 +18,8 @@ export const fetchUserUrls = createAsyncThunk(
   'urls/fetchUserUrls',
   async (_, { rejectWithValue }) => {
     try {
-      // This would be your API call to fetch user's URLs
-      // const response = await getUserUrlsAPI();
-      // return response;
-      
-      // For now, return empty array until you implement the API
-      return [];
+      const response = await getUserUrlsAPI();
+      return response;
     } catch (error) {
       return rejectWithValue(error.message || 'Failed to fetch URLs');
     }
@@ -34,8 +30,7 @@ export const deleteUrl = createAsyncThunk(
   'urls/deleteUrl',
   async (urlId, { rejectWithValue }) => {
     try {
-      // This would be your API call to delete a URL
-      // await deleteUrlAPI(urlId);
+      await deleteUrlAPI(urlId);
       return urlId;
     } catch (error) {
       return rejectWithValue(error.message || 'Failed to delete URL');

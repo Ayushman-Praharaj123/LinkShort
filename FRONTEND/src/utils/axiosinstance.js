@@ -1,10 +1,27 @@
 import axios from 'axios'
 
 const axiosInstance = axios.create({
-    baseURL: "https://link-short-9mvs.vercel.app/",// Change this to your backend URL while hosting 
+    baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:3000", // Use environment variable
     timeout: 10000, // 10s
     withCredentials: true // Include cookies in requests
 })
+
+// Request interceptor to add auth token
+axiosInstance.interceptors.request.use(
+    (config) => {
+        // Get token from localStorage
+        const token = localStorage.getItem('authToken');
+
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
 axiosInstance.interceptors.response.use(
     (response) => {
@@ -31,7 +48,14 @@ axiosInstance.interceptors.response.use(
                     errorMessage = 'Authentication required. Please log in.';
                     errorCode = 'UNAUTHORIZED';
 
+                    // Clear authentication data
                     localStorage.removeItem('authToken');
+                    localStorage.removeItem('userData');
+
+                    // Redirect to login page if not already there
+                    if (window.location.pathname !== '/auth') {
+                        window.location.href = '/auth';
+                    }
 
                     break;
                 case 403:

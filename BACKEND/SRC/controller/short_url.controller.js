@@ -40,3 +40,35 @@ export const createCustomShortUrl = warpAsync(async (req, res) => {
     const shortUrl = await createCustomShortUrl(url, slug);
     res.status(200).json({ shortUrl: process.env.APP_URL + shortUrl });
 });
+
+export const getUserUrls = warpAsync(async (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ message: "Authentication required" });
+    }
+
+    // TODO: Implement getUserUrls service function
+    // const urls = await getUserUrlsService(req.user._id);
+
+    // For now, return empty array
+    res.status(200).json({
+        urls: [],
+        stats: {
+            totalUrls: 0,
+            totalClicks: 0,
+            thisMonth: 0
+        }
+    });
+});
+
+export const deleteUserUrl = warpAsync(async (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ message: "Authentication required" });
+    }
+
+    const { id } = req.params;
+
+    // TODO: Implement deleteUserUrl service function
+    // await deleteUserUrlService(id, req.user._id);
+
+    res.status(200).json({ message: "URL deleted successfully" });
+});
