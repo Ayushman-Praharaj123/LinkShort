@@ -41,8 +41,3 @@ _UI Preview of the Application_
 - JWT for auth
 - Bcrypt for password hashing
 - Nano ID for short URLs
-
----
-
-## Folder Structure
-
