@@ -26,6 +26,7 @@ if (process.env.NODE_ENV !== "test") {
 const allowedOrigins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://link-short-lrui.vercel.app", // Production frontend
     process.env.FRONTEND_URL
 ].filter(Boolean);
 
