@@ -13,12 +13,19 @@ export const createShortUrl = warpAsync(async (req, res) => {
          shortUrl = await createShortUrlWithoutUser(data.url);
     }
 
+    // Debug: Log the APP_URL being used
+    console.log('APP_URL from env:', process.env.APP_URL);
+    console.log('NODE_ENV:', process.env.NODE_ENV);
+
+    // Ensure APP_URL is set correctly
+    const baseUrl = process.env.APP_URL || 'https://linkshort-tudg.onrender.com/';
+
     // Return both the short URL and additional data
     res.status(200).json({
         success: true,
-        shortUrl: process.env.APP_URL + shortUrl,
-        displayUrl: `short.ly/${shortUrl}`, 
-        workingUrl: process.env.APP_URL + shortUrl, 
+        shortUrl: baseUrl + shortUrl,
+        displayUrl: `short.ly/${shortUrl}`,
+        workingUrl: baseUrl + shortUrl,
         originalUrl: data.url,
         slug: shortUrl,
         message: "URL shortened successfully"
