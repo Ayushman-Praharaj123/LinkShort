@@ -41,3 +41,5 @@ _UI Preview of the Application_
 - JWT for auth
 - Bcrypt for password hashing
 - Nano ID for short URLs
+### Live Preview 
+--link-short-lrui.vercel.app
