@@ -9,37 +9,53 @@ import { errorHandler } from "./SRC/utils/errorhandler.js";
 import cors from "cors";
 import { attachUser } from "./SRC/utils/attachUser.js";
 import cookieParser from "cookie-parser";
-dotenv.config("./.env");
+import helmet from "helmet";
+import morgan from "morgan";
+
+dotenv.config();
+
 const app = express();
+
+// Security middlewares
+app.use(helmet());
+if (process.env.NODE_ENV !== "test") {
+    app.use(morgan("combined"));
+}
+
 // CORS: allow only known frontends
 const allowedOrigins = [
-    'http://localhost:5173',
-    'http://127.0.0.1:5173',
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
     process.env.FRONTEND_URL
 ].filter(Boolean);
 
 app.use(cors({
     origin: function (origin, callback) {
-        // Allow non-browser clients (Postman) and same-origin requests with no Origin header
         if (!origin) return callback(null, true);
         if (allowedOrigins.includes(origin)) return callback(null, true);
         return callback(new Error(`Not allowed by CORS: ${origin}`));
     },
     credentials: true,
-    methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 app.use(json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(attachUser);
+
+// Routes
 app.use("/api/create", short_url);
-app.use("/api", short_url); // For /api/urls endpoints
+app.use("/api", short_url);
 app.use("/api/auth", auth_routes);
 app.get("/:id", redirectFromShortUrl);
+
+// Error handler
 app.use(errorHandler);
-app.listen(3000, () => {
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
     connectDB();
-    console.log("Server is running on http://localhost:3000");
+    console.log(`🚀 Server running on port ${PORT}`);
 });
